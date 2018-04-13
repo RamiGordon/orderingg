@@ -64,5 +64,5 @@ $env:FLASK_DEBUG="1"
 flask run
 ```
 Grupo 10
-Ramiro Gordon
-Emiliano Hernandez Ruiz.
+- Ramiro Gordon --> ramirogordon2@gmail.com
+- Emiliano Hernandez Ruiz --> joaquinhrz11@gmail.com
