@@ -65,4 +65,4 @@ flask run
 ```
 Grupo 10
 Ramiro Gordon
-Emiliano Hernandez Ruiz
+Emiliano Hernandez Ruiz.
