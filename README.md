@@ -63,6 +63,6 @@ $env:FLASK_APP="orderingg.py"
 $env:FLASK_DEBUG="1"
 flask run
 ```
-Grupo 10
+Grupo 10.
 - Ramiro Gordon --> ramirogordon2@gmail.com
 - Emiliano Hernandez Ruiz --> joaquinhrz11@gmail.com
