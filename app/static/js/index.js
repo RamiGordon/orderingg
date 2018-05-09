@@ -46,6 +46,7 @@
             .then(function (r) {
                 if (r.error) {
                     console.error(r.error);
+                    alert("Ya existe el producto");
                 } else {
                     API.getOrder().then(function (data) {
                         refs.table.update(data);
