@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,9 +16,9 @@
 
         <div class="columns">
             <div class="column is-12">
-                <button class="button is-primary is-pulled-right" onclick="Modal.open()">
+                <button class="button is-primary is-danger is-focused is-rounded is-pulled-right" onclick="refs.modal.open()">
                     <span class="icon"><i class="fas fa-plus"></i></span>
-                    <span>Agregar</span>
+                    <span>Agregar producto</span>
                 </button>
             </div>
         </div>
@@ -30,8 +30,9 @@
             <div class="modal-background"></div>
             <div class="modal-card">
                 <header class="modal-card-head">
-                    <p class="modal-card-title">Agregar producto</p>
-                    <button class="delete" aria-label="close" onclick="Modal.close()"></button>
+                    <p id="save-title" class="modal-card-title">Agregar producto</p>
+                    <p id="edit-title" hidden class="modal-card-title">Editar producto</p>
+                    <button class="delete" aria-label="close" onclick="refs.modal.close()"></button>
                 </header>
                 <section class="modal-card-body">
                     <form>
@@ -43,7 +44,7 @@
                         <div class="field">
                             <label class="label">Cantidad</label>
                             <div class="control">
-                                <input id="quantity" class="input" type="number">
+                                <input id="quantity" class="input" type="number" min="0" oninput="validity.valid||(value='');">
                             </div>
                         </div>
 
@@ -53,8 +54,9 @@
                     </form>
                 </section>
                 <footer class="modal-card-foot">
-                    <button class="button is-success">Guardar</button>
-                    <button class="button" onclick="Modal.close()">Cancelar</button>
+                    <button id="save-button" class="button is-success">Guardar</button>
+                    <button id="edit-button" class="button is-warning">Editar</button>
+                    <button class="button" onclick="refs.modal.close()">Cancelar</button>
                 </footer>
             </div>
         </div>
@@ -64,21 +66,21 @@
 
     <!-- Template handlebars de la tabla -->
     <script id="table-template" type="text/x-handlebars-template">
-        <table class="table is-fullwidth is-hoverable">
+        <table class="table is-fullwidth is-hoverable is-striped">
             <thead>
                 <tr>
-                    <td>ID</td>
-                    <td>Descripción</td>
-                    <td>Precio unitario</td>
-                    <td>Cantidad</td>
-                    <td>Precio total</td>
+                    <th><b>ID<b></th>
+                    <th><b>Descripción<b></th>
+                    <th><b>Precio unitario<b></th>
+                    <th><b>Cantidad<b></th>
+                    <th><b>Precio total<b></th>
                 </tr>
             </thead>
             <tbody>
                 {{# each products }}
                     <tr>
                         <td>{{ id }}</td>
-                        <td>{{ description }}</td>
+                        <td>{{ name }}</td>
                         <td>{{ price }}</td>
                         <td>{{ quantity }}</td>
                         <td>{{ totalPrice }}</td>
@@ -100,7 +102,7 @@
     <!-- Template handlebars del select de productos -->
     <script id="select-template" type="text/x-handlebars-template">
         <div class="select">
-            <select>
+            <select id="select-prod">
                 <option disabled selected value="">Seleccione un producto</option>
                 {{# each products }}
                     <option value="{{ id }}">{{ name }}</option>
