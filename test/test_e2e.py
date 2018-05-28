@@ -51,6 +51,12 @@ class Ordering(unittest.TestCase):
         self.driver.close()
 
     def test_cant_negativo(self):
+        '''
+        Punto 1_a:
+        Hacer un test de unidad para verificar que no se 
+        pueda crear una instancia de la clase OrderProduct 
+        si el atributo quantity es un entero negativo.
+        '''
         orden = Order(id= 1)
         db.session.add(orden)
         producto = Product(name= 'mesa', price= 10)
@@ -74,6 +80,18 @@ class Ordering(unittest.TestCase):
         time.sleep(10) 
         cantidad_en_tabla = driver.find_element_by_xpath('//*[@id="orders"]/table/tbody/tr/td[4]')
         self.assertGreater(int(cantidad_en_tabla.text),0,"Agrego una cantidad negativa")
+    
+    def test_nomb_produc(self):
+        '''
+        Punto 2_b:
+        Hacer un test de integración con Selenium para verificar
+        que se haya solucionado el bug no mostraba el nombre del producto
+        en la tabla, arreglado en la Actividad 2
+        '''
+        driver = self.driver
+        driver.get(self.baseURL)
+        nom_produc = driver.find_element_by_xpath("// html // tbody / tr[1] / td[2]")
+        assert nom_produc.text != "", "No aparece el nombre del producto"
 
 if __name__ == "__main__":
     unittest.main()
