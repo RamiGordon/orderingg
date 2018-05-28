@@ -90,8 +90,16 @@ class Ordering(unittest.TestCase):
         '''
         driver = self.driver
         driver.get(self.baseURL)
+        botonAgregar = driver.find_element_by_xpath('/html/body/main/div[1]/div/button')
+        botonAgregar.click()
+        select_producto = Select(driver.find_element_by_id('select-prod'))
+        select_producto.select_by_visible_text("Silla")
+        time.sleep(2)
+        guardar_button = driver.find_element_by_id('save-button')
+        guardar_button.click()
+        time.sleep(5)
         nom_produc = driver.find_element_by_xpath("// html // tbody / tr[1] / td[2]")
-        assert nom_produc.text != "", "No aparece el nombre del producto"
+        assert nom_produc.text == "Silla", "No aparece el nombre del producto"
 
 if __name__ == "__main__":
     unittest.main()
