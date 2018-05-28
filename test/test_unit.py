@@ -55,10 +55,14 @@ class OrderingTestCase(TestCase):
     def test_get_product(self):
          p = Product(name="silla", price=15)
          db.session.add(p)
+         orde=Order()
+         db.session.add(orde)
+         op=OrderProduct(order_id = 1, product_id = 1, product= p, quantity=10)
+         db.session.add(op)
          db.session.commit()
-         resp = self.client.get('/product')
+         resp = self.client.get('/order/1/product/1')
          product = json.loads(resp.data)
-         self.assertEqual(len(product), 1, "No devolvio el producto")
+         self.assert200(resp, "No existe orden y/o producto")
 
 if __name__ == '__main__':
     unittest.main()
