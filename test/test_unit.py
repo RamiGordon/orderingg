@@ -40,6 +40,13 @@ class OrderingTestCase(TestCase):
  
 
     def test_orderProduc_negativo(self):
+        '''
+        Punto 1_a:
+        Hacer un test de unidad para verificar 
+        que no se pueda crear una instancia de la 
+        clase OrderProduct si el atributo quantity 
+        es un entero negativo.
+        '''
         p = Product(name="mesa", price=20)
         
         db.session.commit()
@@ -53,16 +60,69 @@ class OrderingTestCase(TestCase):
         
     
     def test_get_product(self):
-         p = Product(name="silla", price=15)
-         db.session.add(p)
-         orde=Order()
-         db.session.add(orde)
-         op=OrderProduct(order_id = 1, product_id = 1, product= p, quantity=10)
-         db.session.add(op)
-         db.session.commit()
-         resp = self.client.get('/order/1/product/1')
-         product = json.loads(resp.data)
-         self.assert200(resp, "No existe orden y/o producto")
+        '''
+        Punto 1_b:
+        Hacer un test de unidad para probar el 
+        funcionamiento del método GET en el endpoint 
+        /order/<pk_order>/product/<pk_product>
+        '''
+        p = Product(name="silla", price=15)
+        db.session.add(p)
+        orde=Order()
+        db.session.add(orde)
+        op=OrderProduct(order_id = 1, product_id = 1, product= p, quantity=10)
+        db.session.add(op)
+        db.session.commit()
+        resp = self.client.get('/order/1/product/1')
+        product = json.loads(resp.data)
+        self.assert200(resp, "No existe orden y/o producto")
+
+    def test_order_product_PUT(self):
+        '''
+        Punto opcional 1_a:
+        Hacer un test de unidad para probar el 
+        funcionamiento del método PUT en el endpoint 
+        /order/<pk_order>/product/<pk_product>.
+        '''
+
+        #Creo Producto
+        producto = {
+            'id':1,
+            'name': 'Tenedor',
+            'price': 50
+        }
+    
+        self.client.post('/product', data=json.dumps(producto), content_type='application/json')
+
+        #creo una orden
+        order = {
+            "id": 1
+        }
+
+        order = Order()
+
+        #Guardo la orden en la db directo ya que no esta en endpoint en la api
+        db.session.add(order)
+        db.session.commit()
+
+        producto = {
+            'quantity': 1,
+            'id': 1,
+            'name': 'Tenedor',
+            'price': 500
+        }
+
+        orderProduct = {"quantity":1,"product":{"id":1}}
+
+        #Creo el OrderProduct
+        self.client.post('/order/1/product', data=json.dumps(orderProduct), content_type='application/json')
+
+        #Cambio la cantidad del order producto y hago un put en el endpoint
+        orderProduct =  {"quantity":2,"product":{"id":1}}
+        self.client.put('/order/1/product/1', data=json.dumps(orderProduct), content_type='application/json')
+        resp = self.client.get('/order/1/product/1')
+        data = json.loads(resp.data)
+        assert data['quantity']==2,"No se cambio el precio del producto"
 
 if __name__ == '__main__':
     unittest.main()
