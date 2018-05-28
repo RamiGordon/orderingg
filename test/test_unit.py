@@ -77,6 +77,19 @@ class OrderingTestCase(TestCase):
         product = json.loads(resp.data)
         self.assert200(resp, "No existe orden y/o producto")
 
+    def test_product_get(self):
+        '''
+        Punto 2_a:
+        Hacer un test de unidad para probar el funcionamiento 
+        del método GET en el endpoint /product.
+        '''
+        p = Product(name="silla", price=15)
+        db.session.add(p)
+        db.session.commit()
+        resp=self.client.get('/product')
+        product=json.loads(resp.data)
+        self.assertEqual(len(product), 1, "No devolvio el producto")
+
     def test_order_product_PUT(self):
         '''
         Punto opcional 1_a:
