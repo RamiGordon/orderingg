@@ -36,13 +36,25 @@ class Ordering(unittest.TestCase):
 
         self.driver = webdriver.Chrome()
 
-    def test_title(self):
+    #def test_title(self):
+    #    driver = self.driver
+    #    driver.get(self.baseURL)
+    #    add_product_button = driver.find_element_by_xpath('/html/body/main/div[1]/div/button')
+    #    add_product_button.click()
+    #    modal = driver.find_element_by_id('modal')
+    #    assert modal.is_displayed(), "El modal no esta visible"
+
+    def test_nomb_produc(self):
+        '''
+        Punto 2_b:
+        Hacer un test de integración con Selenium para verificar 
+        que se haya solucionado el bug no mostraba el nombre del producto 
+        en la tabla, arreglado en la Actividad 2
+        '''
         driver = self.driver
         driver.get(self.baseURL)
-        add_product_button = driver.find_element_by_xpath('/html/body/main/div[1]/div/button')
-        add_product_button.click()
-        modal = driver.find_element_by_id('modal')
-        assert modal.is_displayed(), "El modal no esta visible"
+        nom_produc = driver.find_element_by_xpath("// html // tbody / tr[1] / td[2]")
+        assert nom_produc.text != "", "No aparece el nombre del producto"
 
     def tearDown(self):
         db.session.remove()
