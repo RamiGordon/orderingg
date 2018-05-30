@@ -55,7 +55,7 @@ class OrderingTestCase(TestCase):
         order.products.append(orderProduct)
         db.session.add(order)
         db.session.commit()
-        op = OrderProduct.query.all()
+        op = OrderProduct.query.all() #
         self.assertEqual(len(op), 0, "Se creo con cantidad negativa")
         
     
@@ -88,7 +88,7 @@ class OrderingTestCase(TestCase):
         db.session.commit()
         resp=self.client.get('/product')
         product=json.loads(resp.data)
-        self.assertEqual(len(product), 1, "No devolvio el producto")
+        self.assertEqual(len(product), 1, "No devolvio el producto") #testear respuesta
 
     def test_order_product_PUT(self):
         '''
