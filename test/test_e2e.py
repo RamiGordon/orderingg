@@ -90,16 +90,29 @@ class Ordering(unittest.TestCase):
         '''
         driver = self.driver
         driver.get(self.baseURL)
-        botonAgregar = driver.find_element_by_xpath('/html/body/main/div[1]/div/button')
-        botonAgregar.click()
-        select_producto = Select(driver.find_element_by_id('select-prod'))
-        select_producto.select_by_visible_text("Silla")
-        time.sleep(2)
-        guardar_button = driver.find_element_by_id('save-button')
-        guardar_button.click()
-        time.sleep(5)
-        nom_produc = driver.find_element_by_xpath("// html // tbody / tr[1] / td[2]")
-        assert nom_produc.text == "Silla", "No aparece el nombre del producto"
+        time.sleep(10)
+
+        #Creo orden
+        orden = Order(id=1)
+        db.session.add(orden)
+
+        #Creo producto
+        producto = Product(id=1, name='Cuchillo', price=50)
+        db.session.add(producto)
+
+        #Creo orden_producto
+        ordenProducto = OrderProduct(order_id=1, product_id=1, quantity=5, product=producto
+        db.session.add(ordenProducto)
+
+        #commiteo
+        db.session.commit()
+
+        #Guardo el path de donde tendria que aparecel el nombre del producto
+        nombre_producto = driver.find_element_by_xpath('//*[@id="orders"]/table/tbody/tr[1]/td[2]')
+        
+        #Comparo si ese nombre aparece y es igual al producto que cree
+        self.assertEqual(nombre_producto.text, "Cuchillo"), 'No aparece el nombre del producto'
+        
 
 if __name__ == "__main__":
     unittest.main()
