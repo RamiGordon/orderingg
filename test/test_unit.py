@@ -83,12 +83,24 @@ class OrderingTestCase(TestCase):
         Hacer un test de unidad para probar el funcionamiento 
         del método GET en el endpoint /product.
         '''
-        p = Product(name="silla", price=15)
-        db.session.add(p)
+        #Creo producto
+        producto = {
+            name="silla", 
+            price=15
+        }
+
+        #Commiteo el producto a la db
+        db.session.add(producto)
         db.session.commit()
-        resp=self.client.get('/product')
-        product=json.loads(resp.data)
-        self.assertEqual(len(product), 1, "No devolvio el producto") #testear respuesta
+
+        #Envio el GET
+        resp = self.client.get('/product')
+
+        product = json.loads(resp.data)
+        self.assertEqual(len(product), 1, "No devolvio el producto")
+        
+        #Testeo respuesta de GET
+        self.assert200(resp)
 
     def test_order_product_PUT(self):
         '''
