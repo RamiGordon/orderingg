@@ -55,9 +55,9 @@ class OrderingTestCase(TestCase):
         order.products.append(orderProduct)
         db.session.add(order)
         db.session.commit()
-        op = OrderProduct.query.all() #
-        self.assertEqual(len(op), 0, "Se creo con cantidad negativa")
+        op = OrderProduct.query.filter('product_id=1', 'order_id=1') #
         
+        self.assertIsNotNone(op, "no se creo negativo")
     
     def test_get_product(self):
         '''
