@@ -101,7 +101,7 @@ class Ordering(unittest.TestCase):
         db.session.add(producto)
 
         #Creo orden_producto
-        ordenProducto = OrderProduct(order_id=1, product_id=1, quantity=5, product=producto
+        ordenProducto = OrderProduct(order_id=1, product_id=1, quantity=5, product=producto)
         db.session.add(ordenProducto)
 
         #commiteo
