@@ -84,10 +84,7 @@ class OrderingTestCase(TestCase):
         del método GET en el endpoint /product.
         '''
         #Creo producto
-        producto = {
-            name="silla", 
-            price=15
-        }
+        producto = Product(name="silla", price=15)
 
         #Commiteo el producto a la db
         db.session.add(producto)
