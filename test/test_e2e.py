@@ -88,9 +88,6 @@ class Ordering(unittest.TestCase):
         que se haya solucionado el bug no mostraba el nombre del producto
         en la tabla, arreglado en la Actividad 2
         '''
-        driver = self.driver
-        driver.get(self.baseURL)
-        time.sleep(10)
 
         #Creo orden
         orden = Order(id=1)
@@ -106,6 +103,10 @@ class Ordering(unittest.TestCase):
 
         #commiteo
         db.session.commit()
+
+        driver = self.driver
+        driver.get(self.baseURL)
+        time.sleep(10)
 
         #Guardo el path de donde tendria que aparecel el nombre del producto
         nombre_producto = driver.find_element_by_xpath('//*[@id="orders"]/table/tbody/tr[1]/td[2]')
