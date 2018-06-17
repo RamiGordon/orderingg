@@ -42,9 +42,7 @@ class Order(db.Model):
 
     @hybrid_property
     def orderPrice(self):
-        """
-        Computa el precio total de la orden
-        """
+        """Computa el precio total de la orden"""
         return sum([
             product.price * product.quantity for product in self.products
         ])
@@ -63,12 +61,19 @@ class Order(db.Model):
             'orderPrice': self.orderPrice
         }
 
+
 class OrderProduct(db.Model):
-    """
-    Clase OrderProduct, tabla transpuesta
-    """
-    order_id = db.Column(db.Integer, db.ForeignKey('order.id'), primary_key=True)
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), primary_key=True)
+    """Clase OrderProduct, tabla transpuesta"""
+    order_id = db.Column(
+        db.Integer,
+        db.ForeignKey('order.id'),
+        primary_key=True
+    )
+    product_id = db.Column(
+        db.Integer,
+        db.ForeignKey('product.id'),
+        primary_key=True
+    )
     product = relationship('Product')
     quantity = db.Column(db.Integer)
 
@@ -77,10 +82,8 @@ class OrderProduct(db.Model):
         return self.product.price
 
     @hybrid_property
-    def totalPrice(self):
-        """
-        Computa el precio total del producto
-        """
+    def totalprice(self):
+        """Computa el precio total del producto"""
         return self.product.price * self.quantity
 
     @property
