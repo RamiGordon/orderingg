@@ -42,13 +42,12 @@ class OrderingTestCase(TestCase):
     def test_orderProduc_negativo(self):
         '''
         Punto 1_a:
-        Hacer un test de unidad para verificar 
-        que no se pueda crear una instancia de la 
+        Hacer un test de unidad para verificar
+        que no se pueda crear una instancia de la
         clase OrderProduct si el atributo quantity 
         es un entero negativo.
         '''
         p = Product(name="mesa", price=20)
-        
         db.session.commit()
         order = Order(id=1)
         orderProduct = OrderProduct(order_id=1, product_id=1, quantity=-3, product=p)
@@ -70,7 +69,7 @@ class OrderingTestCase(TestCase):
         db.session.add(p)
         orde=Order()
         db.session.add(orde)
-        op=OrderProduct(order_id = 1, product_id = 1, product= p, quantity=10)
+        op=OrderProduct(order_id=1, product_id=1, product= p, quantity=10)
         db.session.add(op)
         db.session.commit()
         resp = self.client.get('/order/1/product/1')
@@ -83,10 +82,10 @@ class OrderingTestCase(TestCase):
         Hacer un test de unidad para probar el funcionamiento 
         del método GET en el endpoint /product.
         '''
-        #Creo producto
+        # Creo producto
         producto = Product(name="silla", price=15)
 
-        #Commiteo el producto a la db
+        # Commiteo el producto a la db
         db.session.add(producto)
         db.session.commit()
 
@@ -134,7 +133,7 @@ class OrderingTestCase(TestCase):
             'price': 500
         }
 
-        orderProduct = {"quantity":1,"product":{"id":1}}
+        orderProduct = {"quantity": 1, "product":{"id":1}}
 
         #Creo el OrderProduct
         self.client.post('/order/1/product', data=json.dumps(orderProduct), content_type='application/json')
@@ -144,7 +143,7 @@ class OrderingTestCase(TestCase):
         self.client.put('/order/1/product/1', data=json.dumps(orderProduct), content_type='application/json')
         resp = self.client.get('/order/1/product/1')
         data = json.loads(resp.data)
-        assert data['quantity']==2,"No se cambio el precio del producto"
+        assert data['quantity'] == 2,"No se cambio el precio del producto"
 
 if __name__ == '__main__':
     unittest.main()
