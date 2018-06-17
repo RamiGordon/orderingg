@@ -46,4 +46,4 @@ const Table = (function () {
     return {
         init
     };
-})()
+})(); // \r\n
