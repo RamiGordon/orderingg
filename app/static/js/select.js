@@ -52,7 +52,7 @@ const Select = (function () {
         const id = parseInt($option.value);
 
         return this.data.filter(function (product) {
-            return product.id == id;
+            return product.id === id;
         })[0];
     }
 
@@ -108,7 +108,7 @@ const Select = (function () {
 
     function hideErrorMsg() {
         const $help = this.$el.querySelector('.help');
-        $help.classList.add('is-hidden');
+        $help.classList.add("is-hidden");
         this.$el.querySelector('.select').classList.remove('is-danger');
     }
 

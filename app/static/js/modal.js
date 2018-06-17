@@ -106,10 +106,10 @@ const Modal = (function () {
             $edit,
             $save,
             $editTitle: $modal.querySelector('#edit-title'),
-            $saveTitle: $modal.querySelector('#save-title'),
+            $saveTitle: $modal.querySelector('#save-title')
         };
 
-        modal.close = close.bind(modal),
+        modal.close = close.bind(modal)
         modal.open = open.bind(modal)
         modal.openEdit = openEdit.bind(modal)
 
@@ -148,14 +148,14 @@ const Modal = (function () {
         this.$select.selectValue(product.id);
         this.$quantity.setValue(product.quantity);
 
-        this.$modal.classList.add('is-active');
+        this.$modal.classList.add("is-active");
     }
 
     /**
      * Cierra el modal
      **/
     function close() {
-        this.$modal.classList.remove('is-active');
+        this.$modal.classList.remove("is-active");
     }
 
     return {
